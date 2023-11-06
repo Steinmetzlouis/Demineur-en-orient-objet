@@ -1,11 +1,16 @@
+# from partie import Partie
+from case_bombe import Bombe
+from case_vide import Vide
+from case_voisin import Voisin
+
 class Grille(object):
-    def __init__(self, longueur_grille, largeur_grille, grille, nb_bombe):
+    def __init__(self, etat_partie, longueur_grille, largeur_grille, grille, nb_bombe):
         self.longueur_grille = longueur_grille
         self.largeur_grille = largeur_grille
         self.grille = grille
         self.bombe_restante = nb_bombe
         self.case_a_decouvrir = longueur_grille*largeur_grille-nb_bombe
-        self.grille_devoilee = False
+        self.etat_partie = "non_fini"
         
         
     def decouvrir_case(self,x,y):
@@ -23,8 +28,7 @@ class Grille(object):
                     self.case_a_decouvrir -= 1
     
     def test_fin(self):
-        while self.grille_devoilee == False:
-            if self.case_a_decouvrir == 0:
-                self.grille_devoilee == True
-            elif self.case_a_decouvrir == -1:
-                
+        if self.case_a_decouvrir == 0:
+            self.etat_partie == "fini"
+        elif self.case_a_decouvrir == -1:
+            self.etat_partie == "erreur"

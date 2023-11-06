@@ -12,7 +12,7 @@ class Partie(object):
         self.longueur_grille = 18
         self.largeur_grille = 15
         
-        self.grille_devoilee = False
+        self.etat_partie = "non_fini"
         
     
     def choix_difficulte(self, difficulte):
@@ -65,12 +65,21 @@ class Partie(object):
             self.largeur_grille = 20
             
         
-        self.magrille = Grille(self.longueur_grille, self.largeur_grille, self.creation_grille_array(), self.nb_bombe)
+        self.magrille = Grille(self.etat_partie, self.longueur_grille, self.largeur_grille, self.creation_grille_array(), self.nb_bombe)
         
             
             
     
-    # def fin_partie(self):
-    #     if self.grille_devoilee == True:
-    #         #stop chrono
+    def fin_partie(self, etat_partie):
+        while magrille.etat_partie == "non_fini":
+            magrille.test_fin()
+        if etat_partie == "fini":
+            #stop chrono
+            print("Bravo")
+        elif etat_partie== "erreur":
+            print("Echec")
+            
+            
+if __name__ == "__main__":
+    partie = Partie()
             
