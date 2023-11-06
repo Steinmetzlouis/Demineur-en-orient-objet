@@ -15,20 +15,20 @@ class Grille(object):
     def __str__(self):
         result = ''
         for i in range (self.largeur_grille):
-            result + '\n'
             for j in range (self.longueur_grille):
                 case = self.grille[i][j]
                 if case.etat == "cachee":
-                    result + '? | '
+                    result += '? | '
                 elif case.etat == "marquee":
-                    result + 'X | '
+                    result += 'X | '
                 else:
                     if isinstance(case, Vide):
-                        result + '  | '
+                        result += '  | '
                     elif isinstance(case, Bombe):
-                        result + 'B | '
+                        result += 'B | '
                     elif isinstance(case, Vide):
-                        result + '{} | '.format(case.nb_voisin)
+                        result += '{} | '.format(self.case.nb_voisin)
+            result += '\n'
                     
         return result
         

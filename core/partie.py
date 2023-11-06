@@ -1,5 +1,4 @@
 import numpy as np
-import random
 from case_bombe import Bombe
 from case_vide import Vide
 from case_voisin import Voisin
@@ -50,6 +49,11 @@ class Partie(object):
         
         
     def debut_partie(self):
+        if self.difficulte == "test":
+            self.nb_bombe = 2
+            self.longueur_grille = 4
+            self.largeur_grille = 4
+            
         if self.difficulte == "facile":
             self.nb_bombe = 10
             self.longueur_grille = 10
@@ -77,24 +81,25 @@ class Partie(object):
         
         self.magrille.decouvrir_case(x,y)
         self.magrille.test_fin()
+        print(self.magrille)
     
     def jouer(self):
         print(self.magrille)
         while self.etat_partie == "non_fini":
             self.marquer_case()
-        if etat_partie == "fini":
+        if self.etat_partie == "fini":
             #stop chrono
             print("Bravo")
-        elif etat_partie== "erreur":
+        elif self.etat_partie== "erreur":
             print("Echec")
             
             
 if __name__ == "__main__":
     partie = Partie()
     
-    # difficulte = input()
+    difficulte = input()
     
-    # partie.choix_difficulte(difficulte)
+    partie.choix_difficulte(difficulte)
     
     partie.debut_partie()
     partie.jouer()
