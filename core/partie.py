@@ -1,6 +1,8 @@
 import numpy as np
 import random
 from case_bombe import Bombe
+from case_vide import Vide
+from case_voisin import Voisin
 from grille import Grille
 
 class Partie(object):
@@ -17,7 +19,7 @@ class Partie(object):
         self.difficulte = difficulte
         
     
-    def creation_grille(self):
+    def creation_grille_array(self):
         grille = np.zeros(self.largeur_grille, self.longueur_grille)
         
         B = []
@@ -33,7 +35,17 @@ class Partie(object):
                 for j in range (b[1]-1, b[1]+1):
                     grille[i,j] += 1
                     
-        self.magrille = Grille(grille)
+        for i in range (self.largeur_grille):
+            for j in range (self.longueur_grille):
+                if not isinstance(grille[i,j],Bombe):
+                    if grille[i,j] == 0:
+                        grille[i,j] = Vide(i,j)
+                    
+                    else:
+                        nb_voisin = grille[i,j]
+                        grille[i,j] = Voisin(i,j,nb_voisin)
+        
+        return grille
         
         
     def debut_partie(self):
@@ -52,7 +64,8 @@ class Partie(object):
             self.longueur_grille = 24
             self.largeur_grille = 20
             
-        self.creation_grille()
+        
+        self.magrille = Grille(self.longueur_grille, self.largeur_grille, self.creation_grille_array(), self.nb_bombe)
         
             
             
