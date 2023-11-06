@@ -12,9 +12,29 @@ class Grille(object):
         self.case_a_decouvrir = longueur_grille*largeur_grille-nb_bombe
         self.etat_partie = "non_fini"
         
+    def __str__(self):
+        result = ''
+        for i in range (self.largeur_grille):
+            result + '\n'
+            for j in range (self.longueur_grille):
+                case = self.grille[i][j]
+                if case.etat == "cachee":
+                    result + '? | '
+                elif case.etat == "marquee":
+                    result + 'X | '
+                else:
+                    if isinstance(case, Vide):
+                        result + '  | '
+                    elif isinstance(case, Bombe):
+                        result + 'B | '
+                    elif isinstance(case, Vide):
+                        result + '{} | '.format(case.nb_voisin)
+                    
+        return result
+        
         
     def decouvrir_case(self,x,y):
-        case = self.grille[x,y]
+        case = self.grille[x][y]
         case.decouvrir()
         if isinstance(case, Bombe):
             self.case_a_decouvrir = -1
@@ -24,7 +44,7 @@ class Grille(object):
             self.case_a_decouvrir -= 1
             for i in range (x-1,x+1):
                 for j in range (y-1,y+1):
-                    self.grille[i,j].decouvrir()
+                    self.grille[i][j].decouvrir()
                     self.case_a_decouvrir -= 1
     
     def test_fin(self):

@@ -20,30 +20,31 @@ class Partie(object):
         
     
     def creation_grille_array(self):
-        grille = np.zeros(self.largeur_grille, self.longueur_grille)
+        grille = np.zeros((self.largeur_grille, self.longueur_grille)).tolist()
         
         B = []
-        array_bombe = random.choice(self.longueur_grille*self.largeur_grille, size=self.nb_bombe, replace=False)
+        array_bombe = np.random.choice(self.longueur_grille*self.largeur_grille, self.nb_bombe, replace=False)
         for b in array_bombe:
             ligne = b // self.longueur_grille
             colonne = b % self.longueur_grille
-            grille[ligne, colonne] = Bombe(ligne, colonne)
+            grille[ligne][colonne] = Bombe(ligne, colonne)
             B.append((ligne,colonne))
             
         for b in B:
             for i in range (b[0]-1, b[0]+1):
                 for j in range (b[1]-1, b[1]+1):
-                    grille[i,j] += 1
+                    if not isinstance(grille[i][j], Bombe):
+                        grille[i][j] += 1
                     
         for i in range (self.largeur_grille):
             for j in range (self.longueur_grille):
-                if not isinstance(grille[i,j],Bombe):
-                    if grille[i,j] == 0:
-                        grille[i,j] = Vide(i,j)
+                if not isinstance(grille[i][j],Bombe):
+                    if grille[i][j] == 0:
+                        grille[i][j] = Vide(i,j)
                     
                     else:
-                        nb_voisin = grille[i,j]
-                        grille[i,j] = Voisin(i,j,nb_voisin)
+                        nb_voisin = grille[i][j]
+                        grille[i][j] = Voisin(i,j,nb_voisin)
         
         return grille
         
@@ -68,11 +69,19 @@ class Partie(object):
         self.magrille = Grille(self.etat_partie, self.longueur_grille, self.largeur_grille, self.creation_grille_array(), self.nb_bombe)
         
             
-            
+    def marquer_case(self):
+        print('x: ')
+        x = int(input())
+        print('y: ')
+        y = int(input())
+        
+        self.magrille.decouvrir_case(x,y)
+        self.magrille.test_fin()
     
-    def fin_partie(self, etat_partie):
-        while magrille.etat_partie == "non_fini":
-            magrille.test_fin()
+    def jouer(self):
+        print(self.magrille)
+        while self.etat_partie == "non_fini":
+            self.marquer_case()
         if etat_partie == "fini":
             #stop chrono
             print("Bravo")
@@ -82,4 +91,10 @@ class Partie(object):
             
 if __name__ == "__main__":
     partie = Partie()
-            
+    
+    # difficulte = input()
+    
+    # partie.choix_difficulte(difficulte)
+    
+    partie.debut_partie()
+    partie.jouer()
