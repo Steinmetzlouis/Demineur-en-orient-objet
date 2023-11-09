@@ -18,10 +18,10 @@ class Grille(object):
             result += '--'
         result += '-----\n '
         for j in range (self.longueur_grille):
-            result += ' ' + str(j)
-        result += '  y\n'
+            result += ' ' + str(j%10)
+        result += '   y\n'
         for i in range (self.largeur_grille):
-            result += str(i)
+            result += str(i%10)
             for j in range (self.longueur_grille):
                 case = self.grille[i][j]
                 result += ' '

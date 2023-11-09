@@ -5,7 +5,26 @@ from case_voisin import Voisin
 from grille import Grille
 
 class Partie(object):
+    """Classe définissant la partie de démineur
+    
+    Attributes
+    ----------
+    difficulte : str
+        difficulté de la partie, définit la taille de la grille et le nombre de bombe. 4 disponibles: 'test', 'facile', 'moyen', 'difficile'
+    nb_bombe : int
+        nombre de bombes à placer dans la grille
+    longueur_grille : int
+        plus grand coté de la grille (= nb de colonnes)
+    largeur_grille : int
+        plus petit coté de la grille (= nb de lignes)
+    etat_partie : str
+        renseigne sur l'état de la partie. 3 etats possibles: 'non_fini', 'fini' et 'erreur'
+    magrille : Grille
+        Grille de la partie
+    """
     def __init__(self):
+        """Constructeur de la classe Partie
+        """
         self.difficulte = "test"
         self.nb_bombe = 2
         self.longueur_grille = 4
@@ -15,10 +34,19 @@ class Partie(object):
         
     
     def choix_difficulte(self, difficulte):
+        """Fonction qui modifie la difficulté de la partie
+        """
         self.difficulte = difficulte
         
     
     def creation_grille_array(self):
+        """Fonction qui permet de construire et retourner une grille en fonction de la taille de la grille et du nombre de bombes voulu
+
+        Returns
+        -------
+        Grille
+            Grille de la partie
+        """
         grille = np.zeros((self.largeur_grille, self.longueur_grille)).tolist()
         
         B = []
@@ -50,6 +78,13 @@ class Partie(object):
         
         
     def debut_partie(self):
+        """Retourne la grille de la partie en fonction de la difficulté souhaité
+
+        Returns
+        -------
+        Grille
+            Grille de la partie
+        """
         if self.difficulte == "test":
             self.nb_bombe = 2
             self.longueur_grille = 4
@@ -75,6 +110,10 @@ class Partie(object):
         
             
     def marquer_case(self):
+        """Fonction qui permet au joueur de saisir les coordonnées de la case 
+        sur laquelle il veut agir, et séléctionne l'action à réaliser (marquer ou découvrir).
+        Test aussi l'etat de la partie et met à jour ce dernier (etat_partie)
+        """
         print('x: ')
         x = int(input())
         print('y: ')
@@ -90,6 +129,9 @@ class Partie(object):
         print(self.magrille)
     
     def jouer(self):
+        """Fonction qui affiche la grille, et qui continue de proposer au joueur de jouer tant 
+        que la condition de fin n'est pas réalisée. Si elle est atteinte, mets fin à la partie
+        """
         print(self.magrille)
         while self.magrille.etat_partie == "non_fini":
             self.marquer_case()
