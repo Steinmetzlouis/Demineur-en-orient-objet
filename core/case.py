@@ -1,16 +1,16 @@
 class Case(object):
-    """Classe dÃ©finissant une case
+    """Classe définissant une case
     
     Attributes
     ----------
     etat : str
         etat de la case. 3 disponibles: 'cachee', 'marquee', 'decouvert'
     nb_bombe : int
-        nombre de bombes Ã  placer dans la grille
+        nombre de bombes à  placer dans la grille
     x : int
-        coordonnÃ©e de cette case: lignes
+        coordonnée de cette case: lignes
     y : int
-        coordonnÃ©e de cette case: colonnes
+        coordonnée de cette case: colonnes
     """
     def __init__(self, x, y):
         """Constructeur de la classe Case

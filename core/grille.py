@@ -4,11 +4,36 @@ from case_vide import Vide
 from case_voisin import Voisin
 
 class Grille(object):
+    """Classe définissant une case
+    
+    Attributes
+    ----------
+    longueur_grille : int
+        plus grand coté de la grille (= nb de colonnes)
+    largeur_grille : int
+        plus petit coté de la grille (= nb de lignes)
+    etat_partie : str
+        renseigne sur l'état de la partie. 3 etats possibles: 'non_fini', 'fini' et 'erreur'
+    """
     def __init__(self, etat_partie, longueur_grille, largeur_grille, grille, nb_bombe):
+        """Constructeur de la classe Grille
+
+        Parameters
+        ----------
+        etat_partie : str
+            renseigne sur l'état de la partie. 3 etats possibles: 'non_fini', 'fini' et 'erreur'
+        longueur_grille : int
+            plus grand coté de la grille (= nb de colonnes)
+        largeur_grille : int
+            plus petit coté de la grille (= nb de lignes)
+        grille : Grille
+            grille de la partie
+        nb_bombe : int
+            nombre de bombes placé dans la grille
+        """
         self.longueur_grille = longueur_grille
         self.largeur_grille = largeur_grille
         self.grille = grille
-        self.bombe_restante = nb_bombe
         self.etat_partie = "non_fini"
         
     def __str__(self):
