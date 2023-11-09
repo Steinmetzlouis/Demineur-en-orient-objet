@@ -103,10 +103,10 @@ class Partie(object):
 if __name__ == "__main__":
     partie = Partie()
     
-    # print('choix difficulte (facile, moyen, difficile): ')
-    # difficulte = input()
+    print('choix difficulte (facile, moyen, difficile): ')
+    difficulte = input()
     
-    # partie.choix_difficulte(difficulte)
+    partie.choix_difficulte(difficulte)
     
     partie.debut_partie()
     partie.jouer()

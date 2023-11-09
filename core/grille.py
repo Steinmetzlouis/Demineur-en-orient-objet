@@ -12,11 +12,19 @@ class Grille(object):
         self.etat_partie = "non_fini"
         
     def __str__(self):
-        result = ''
+        result = ' '
+        #entete:
+        for j in range (self.longueur_grille):
+            result += '--'
+        result += '-----\n '
+        for j in range (self.longueur_grille):
+            result += ' ' + str(j)
+        result += '  y\n'
         for i in range (self.largeur_grille):
+            result += str(i)
             for j in range (self.longueur_grille):
-                result += ' '
                 case = self.grille[i][j]
+                result += ' '
                 if case.etat == "cachee":
                     result += '.'
                 elif case.etat == "marquee":
@@ -29,6 +37,11 @@ class Grille(object):
                     elif isinstance(case, Voisin):
                         result += str(case.nb_voisin)
             result += '\n'
+        #Pied de page
+        result += '\nx\n'
+        for j in range (self.longueur_grille):
+            result += '--'
+        result += '-----\n'
                     
         return result
         
@@ -50,9 +63,13 @@ class Grille(object):
         for i in range (self.largeur_grille):
             for j in range (self.longueur_grille):
                 case = self.grille[i][j]
+                if isinstance(case, Bombe) and case.etat == "decouvert":
+                    self.etat_partie = "erreur"
+                    return
+        for i in range (self.largeur_grille):
+            for j in range (self.longueur_grille):
+                case = self.grille[i][j]
                 if not isinstance(case, Bombe) and case.etat == "cachee":
                     self.etat_partie = "non_fini"
-                elif isinstance(case, Bombe) and case.etat == "decouvert":
-                    self.etat_partie == "erreur"
-                else:
-                    self.etat_partie == "fini"
+                    return
+        self.etat_partie = "fini"
