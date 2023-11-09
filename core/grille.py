@@ -9,46 +9,50 @@ class Grille(object):
         self.largeur_grille = largeur_grille
         self.grille = grille
         self.bombe_restante = nb_bombe
-        self.case_a_decouvrir = longueur_grille*largeur_grille-nb_bombe
         self.etat_partie = "non_fini"
         
     def __str__(self):
         result = ''
         for i in range (self.largeur_grille):
             for j in range (self.longueur_grille):
+                result += ' '
                 case = self.grille[i][j]
                 if case.etat == "cachee":
-                    result += '? | '
+                    result += '.'
                 elif case.etat == "marquee":
-                    result += 'X | '
+                    result += 'X'
                 else:
                     if isinstance(case, Vide):
-                        result += '  | '
+                        result += '0'
                     elif isinstance(case, Bombe):
-                        result += 'B | '
-                    elif isinstance(case, Vide):
-                        result += '{} | '.format(self.case.nb_voisin)
+                        result += 'B'
+                    elif isinstance(case, Voisin):
+                        result += str(case.nb_voisin)
             result += '\n'
                     
         return result
         
         
-    def decouvrir_case(self,x,y):
+    def decouvrir_case(self,x,y,action):
         case = self.grille[x][y]
-        case.decouvrir()
-        if isinstance(case, Bombe):
-            self.case_a_decouvrir = -1
-        elif isinstance(case, Voisin):
-            self.case_a_decouvrir -= 1
-        if isinstance(case, Vide):
-            self.case_a_decouvrir -= 1
-            for i in range (x-1,x+1):
-                for j in range (y-1,y+1):
-                    self.grille[i][j].decouvrir()
-                    self.case_a_decouvrir -= 1
+        if action == 'm':
+            case.marquer()
+        else:
+            case.decouvrir()
+            if isinstance(case, Vide):                
+                for i in range (x-1,x+2):
+                    for j in range (y-1,y+2):
+                        if 0 <= i < self.largeur_grille and 0 <= j < self.longueur_grille and self.grille[i][j].etat == "cachee":
+                            self.decouvrir_case(i,j,'d')
+                    
     
     def test_fin(self):
-        if self.case_a_decouvrir == 0:
-            self.etat_partie == "fini"
-        elif self.case_a_decouvrir == -1:
-            self.etat_partie == "erreur"
+        for i in range (self.largeur_grille):
+            for j in range (self.longueur_grille):
+                case = self.grille[i][j]
+                if not isinstance(case, Bombe) and case.etat == "cachee":
+                    self.etat_partie = "non_fini"
+                elif isinstance(case, Bombe) and case.etat == "decouvert":
+                    self.etat_partie == "erreur"
+                else:
+                    self.etat_partie == "fini"
