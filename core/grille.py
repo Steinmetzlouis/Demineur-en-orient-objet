@@ -4,7 +4,7 @@ from case_vide import Vide
 from case_voisin import Voisin
 
 class Grille(object):
-    """Classe définissant une case
+    """Classe définissant une case.
     
     Attributes
     ----------
@@ -16,7 +16,7 @@ class Grille(object):
         renseigne sur l'état de la partie. 3 etats possibles: 'non_fini', 'fini' et 'erreur'
     """
     def __init__(self, etat_partie, longueur_grille, largeur_grille, grille, nb_bombe):
-        """Constructeur de la classe Grille
+        """Constructeur de la classe Grille.
 
         Parameters
         ----------
@@ -37,6 +37,8 @@ class Grille(object):
         self.etat_partie = "non_fini"
         
     def __str__(self):
+        """Fonction qui permet de réaliser l'affichage de la grille dans la console.
+        """
         result = ' '
         #entete:
         for j in range (self.longueur_grille):
@@ -72,6 +74,20 @@ class Grille(object):
         
         
     def decouvrir_case(self,x,y,action):
+        """Fonction qui demande et réalise l'action que veut faire le joueur 
+        (marquer/démarquer ou découvrir une case). C'est dans cette dernière qu'est géré la récursivité
+        de la fonction découverte sur une case vide.
+
+        Parameters
+        ----------
+        x : int
+            coordonnée de cette case: lignes
+        y : int
+            coordonnée de cette case: colonnes
+        action : string
+            action que le joueur veut réaliser. Cela peut être soit m pour marquer/démarquer une case soit d 
+            pour découvrir. Pour tout autre saisie par le joueur, l'action découverte sera réalisé.
+        """
         case = self.grille[x][y]
         if action == 'm':
             case.marquer()
@@ -85,6 +101,8 @@ class Grille(object):
                     
     
     def test_fin(self):
+        """Fonction qui permet de changer l'état de la partie s'il y a une erreur ou si la grille est finie.
+        """
         for i in range (self.largeur_grille):
             for j in range (self.longueur_grille):
                 case = self.grille[i][j]

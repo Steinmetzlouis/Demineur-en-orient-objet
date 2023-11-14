@@ -5,12 +5,13 @@ from case_voisin import Voisin
 from grille import Grille
 
 class Partie(object):
-    """Classe définissant la partie de démineur
+    """Classe définissant la partie de démineur.
     
     Attributes
     ----------
     difficulte : str
-        difficulté de la partie, définit la taille de la grille et le nombre de bombe. 4 disponibles: 'test', 'facile', 'moyen', 'difficile'
+        difficulté de la partie, définit la taille de la grille et le nombre de bombe. 4 disponibles: 'test', 
+        'facile', 'moyen', 'difficile'
     nb_bombe : int
         nombre de bombes à placer dans la grille
     longueur_grille : int
@@ -23,7 +24,7 @@ class Partie(object):
         Grille de la partie
     """
     def __init__(self):
-        """Constructeur de la classe Partie
+        """Constructeur de la classe Partie.
         """
         self.difficulte = "test"
         self.nb_bombe = 2
@@ -34,13 +35,20 @@ class Partie(object):
         
     
     def choix_difficulte(self, difficulte):
-        """Fonction qui modifie la difficulté de la partie
+        """Fonction qui modifie la difficulté de la partie.
+
+        Parameters
+        ----------
+        difficulte : str
+            difficulté de la partie, définit la taille de la grille et le nombre de bombe. 4 disponibles: 'test', 
+            'facile', 'moyen', 'difficile'
         """
         self.difficulte = difficulte
         
     
-    def creation_grille_array(self):
-        """Fonction qui permet de construire et retourner une grille en fonction de la taille de la grille et du nombre de bombes voulu
+    def creation_grille(self):
+        """Fonction qui permet de construire et retourner une grille en fonction de la taille de la grille 
+        et du nombre de bombes voulu.
 
         Returns
         -------
@@ -78,12 +86,7 @@ class Partie(object):
         
         
     def debut_partie(self):
-        """Retourne la grille de la partie en fonction de la difficulté souhaité
-
-        Returns
-        -------
-        Grille
-            Grille de la partie
+        """Fonction qui permet de créer la grille de la partie en fonction de la difficulté souhaité.
         """
         if self.difficulte == "test":
             self.nb_bombe = 2
@@ -106,13 +109,13 @@ class Partie(object):
             self.largeur_grille = 20
             
         
-        self.magrille = Grille(self.etat_partie, self.longueur_grille, self.largeur_grille, self.creation_grille_array(), self.nb_bombe)
+        self.magrille = Grille(self.etat_partie, self.longueur_grille, self.largeur_grille, self.creation_grille(), self.nb_bombe)
         
             
     def marquer_case(self):
         """Fonction qui permet au joueur de saisir les coordonnées de la case 
         sur laquelle il veut agir, et séléctionne l'action à réaliser (marquer ou découvrir).
-        Test aussi l'etat de la partie et met à jour ce dernier (etat_partie)
+        Test aussi l'etat de la partie et met à jour ce dernier (etat_partie).
         """
         print('x: ')
         x = int(input())
@@ -127,10 +130,11 @@ class Partie(object):
         else:
             print('Case hors grille')
         print(self.magrille)
+        
     
     def jouer(self):
         """Fonction qui affiche la grille, et qui continue de proposer au joueur de jouer tant 
-        que la condition de fin n'est pas réalisée. Si elle est atteinte, mets fin à la partie
+        que la condition de fin n'est pas réalisée. Si elle est atteinte, mets fin à la partie.
         """
         print(self.magrille)
         while self.magrille.etat_partie == "non_fini":
