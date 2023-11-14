@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import numpy as np
 from case_bombe import Bombe
 from case_vide import Vide

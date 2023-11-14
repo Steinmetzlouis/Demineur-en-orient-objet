@@ -43,12 +43,15 @@ class Grille(object):
         #entete:
         for j in range (self.longueur_grille):
             result += '--'
-        result += '-----\n '
+        result += '-----\n   '
         for j in range (self.longueur_grille):
             result += ' ' + str(j%10)
-        result += '   y\n'
+        result += '   y\n   '
+        for j in range (self.longueur_grille):
+            result += '__'
+        result += '\n'
         for i in range (self.largeur_grille):
-            result += str(i%10)
+            result += str(i%10) + ' |'
             for j in range (self.longueur_grille):
                 case = self.grille[i][j]
                 result += ' '
@@ -92,12 +95,13 @@ class Grille(object):
         if action == 'm':
             case.marquer()
         else:
-            case.decouvrir()
-            if isinstance(case, Vide):                
-                for i in range (x-1,x+2):
-                    for j in range (y-1,y+2):
-                        if 0 <= i < self.largeur_grille and 0 <= j < self.longueur_grille and self.grille[i][j].etat == "cachee":
-                            self.decouvrir_case(i,j,'d')
+            if case.etat != "marquee":
+                case.decouvrir()
+                if isinstance(case, Vide):                
+                    for i in range (x-1,x+2):
+                        for j in range (y-1,y+2):
+                            if 0 <= i < self.largeur_grille and 0 <= j < self.longueur_grille and self.grille[i][j].etat == "cachee":
+                                self.decouvrir_case(i,j,'d')
                     
     
     def test_fin(self):

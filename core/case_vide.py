@@ -15,4 +15,5 @@ class Vide(Case):
     def decouvrir(self):
         """Fonction qui permet de changer l'état de la case en "découvert".
         """
-        self.etat = "decouvert"
+        if self.etat != "marquee":
+            self.etat = "decouvert"
